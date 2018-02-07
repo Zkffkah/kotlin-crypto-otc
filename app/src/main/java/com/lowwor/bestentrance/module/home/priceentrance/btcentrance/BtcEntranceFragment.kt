@@ -46,6 +46,9 @@ class BtcEntranceFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
             btcEntranceAdapter.setNewData(it)
             swipe_layout.isRefreshing = false
         }
+        viewModel.refreshStatus.observeK(this){
+            swipe_layout.isRefreshing = true
+        }
     }
 
     private fun initSwipeRefresh() {

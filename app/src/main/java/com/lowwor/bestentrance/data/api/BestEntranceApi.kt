@@ -22,20 +22,34 @@ class BestEntranceApi @Inject constructor(private val bestEntranceService: BestE
                 getOtcbtcOtcUsdt(), { gankPriceRsp, huoBiPriceRsp, otcbtcPriceRsp ->
 
 
-            listOf(GankMapper.convertToEntrancePrice(gankPriceRsp), HuobiMapper.convertToEntrancePrice(huoBiPriceRsp),
-                    OtcbtcMapper.convertToEntrancePrice(otcbtcPriceRsp)
+            listOf(GankMapper.convertToOneStepUsdtEntrancePrice(gankPriceRsp),
+                    HuobiMapper.convertToOneStepUsdtEntrancePrice(huoBiPriceRsp),
+                    OtcbtcMapper.convertToOneStepUsdtEntrancePrice(otcbtcPriceRsp)
             )
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getBtcPrices(): Observable<List<EntrancePrice>> {
-        return zip(getHuobiOtcBtc(), getOtcbtcOtcBtc(),
-                getZbTickerBtc(), getLocalBitcoinOtcBtc(), { huoBiPriceRsp, otcbtcPriceRsp, zbPriceRsp,
+        return zip(getHuobiOtcUsdt().flatMap<Float> { huobiOtcUsdtRsp ->
+            return@flatMap getHuobiTickerBtc().map {
+                (huobiOtcUsdtRsp.data[0].price * it.tick.data[0].price).toFloat()
+            }
+        },
+                getGankOtcUsdt().flatMap { gankOtcRsp ->
+                    return@flatMap getGankTickerBtc().map { gankTickerBtcRsp ->
+                        (gankTickerBtcRsp.last * gankOtcRsp.appraisedRates?.buyRate!!.toDouble()).toFloat()
+                    }
+                },
+                getHuobiOtcBtc(), getOtcbtcOtcBtc(),
+                getZbTickerBtc(), getLocalBitcoinOtcBtc(), { huobiTwoStepBtcPrice, gankTwoStepBtcPrice, huoBiPriceRsp, otcbtcPriceRsp, zbPriceRsp,
                                                              localBitcoinsPriceRsp ->
-            listOf(HuobiMapper.convertToEntrancePrice(huoBiPriceRsp),
-                    OtcbtcMapper.convertToEntrancePrice(otcbtcPriceRsp)
-                    , ZbMapper.convertToEntrancePrice(zbPriceRsp),
-                    LocalBitcoinMapper.convertToEntrancePrice(localBitcoinsPriceRsp)
+
+            listOf(HuobiMapper.convertToTwoStepBtcToEntrancePrice(huobiTwoStepBtcPrice),
+                    HuobiMapper.convertToOneStepBtcEntrancePrice(huoBiPriceRsp),
+                    GankMapper.convertToTwoStepBtcEntrancePrice(gankTwoStepBtcPrice),
+                    OtcbtcMapper.convertToOneStepBtcEntrancePrice(otcbtcPriceRsp),
+                    ZbMapper.convertToQcBtcEntrancePrice(zbPriceRsp),
+                    LocalBitcoinMapper.convertToOneStepBtcEntrancePrice(localBitcoinsPriceRsp)
             )
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }

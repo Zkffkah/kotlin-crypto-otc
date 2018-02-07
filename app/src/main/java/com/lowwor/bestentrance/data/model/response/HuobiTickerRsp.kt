@@ -1,5 +1,7 @@
 package com.lowwor.bestentrance.data.model.response
 
+import java.math.BigInteger
+
 /**
  * Created by lowwor on 2018/1/27.
  */
@@ -26,13 +28,13 @@ data class HuobiTickerRsp(
 )
 
 data class HuobiTicker(
-		val id: Int, //600848670
+		val id: BigInteger, //600848670
 		val ts: Long, //1489464451000
 		val data: List<HuobiTickerData>
 )
 
 data class HuobiTickerData(
-		val id: Int, //600848670
+		val id: BigInteger, //600848670
 		val price: Double, //7962.62
 		val amount: Double, //0.0122
 		val direction: String, //buy

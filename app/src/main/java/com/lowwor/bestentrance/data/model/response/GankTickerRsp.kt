@@ -8,7 +8,7 @@ package com.lowwor.bestentrance.data.model.response
 data class GankTickerRsp(
 		val result: String, //true
 		val last: Double, //11220.71
-		val lowestAsk: Int, //11315
+		val lowestAsk: Double, //11315
 		val highestBid: Double, //11221.1
 		val percentChange: Double, //6.6603773584906
 		val baseVolume: Double, //6337965.94

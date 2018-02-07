@@ -16,6 +16,16 @@
         tools:text="gate.io" />
 
     <TextView
+        android:id="@+id/text_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/text_market_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="gate.io" />
+
+    <TextView
         android:id="@+id/text_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

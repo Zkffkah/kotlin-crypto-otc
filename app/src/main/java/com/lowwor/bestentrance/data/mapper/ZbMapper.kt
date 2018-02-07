@@ -9,7 +9,7 @@ import com.lowwor.bestentrance.data.model.response.ZbTickerRsp
  */
 object ZbMapper {
 
-    fun convertToEntrancePrice(zbTickerRsp: ZbTickerRsp): EntrancePrice =
+    fun convertToQcBtcEntrancePrice(zbTickerRsp: ZbTickerRsp): EntrancePrice =
             ZbQcBtcPrice(zbTickerRsp.ticker.last.toFloat())
 
 }

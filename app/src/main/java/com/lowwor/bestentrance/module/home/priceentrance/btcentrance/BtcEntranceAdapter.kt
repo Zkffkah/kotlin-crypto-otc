@@ -13,6 +13,7 @@ class BtcEntranceAdapter : BaseQuickAdapter<EntrancePrice, BaseViewHolder>(R.lay
     override fun convert(helper: BaseViewHolder, item: EntrancePrice) {
 
         helper.setText(R.id.text_market_name, item.name)
+        helper.setText(R.id.text_step, item.step)
         helper.setText(R.id.text_price, item.price.toString())
     }
 
