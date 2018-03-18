@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.lowwor.bestentrance"
+        applicationId "com.lowwor.cryptootc"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

@@ -1,4 +1,4 @@
-package com.lowwor.bestentrance
+package com.lowwor.cryptootc
 
 import org.junit.Test
 
